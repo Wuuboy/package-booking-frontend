@@ -10,6 +10,9 @@ export default new Vuex.Store({
     status:'ALL'
   },
   mutations: {
+    updateStatus(state,id){
+      
+    },
     addList (state,items) {
       state.tableData.push(...items);
     },
@@ -22,6 +25,16 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    updateStatus:({commit},id) =>{
+      axios.put('http://localhost:8090/packageOrders/'+id)
+          .then(function (response) {
+            console.log(response.data)
+            commit('filterStatus',response.data)
+          })
+          .catch(function (error) {
+          console.log(error)
+        })
+    },
     filterStatus:({commit},status) =>{
       axios.get('http://localhost:8090/packageOrders?status='+status)
           .then(function (response) {
@@ -35,7 +48,6 @@ export default new Vuex.Store({
       axios
       .get('http://localhost:8090/packageOrders')
       .then(response => {
-        console.log(response.data)
           commit('addList',response.data)
           })
       .catch(function (error) { // 请求失败处理

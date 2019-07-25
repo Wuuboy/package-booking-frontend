@@ -9,15 +9,6 @@
             <!-- <el-button type="danger" @click="opendialog">添加</el-button> -->
             <el-button type="danger"><router-link to="/AddPackage">添加</router-link></el-button>
         </el-row>
-        <el-dialog 
-            title="申诉" 
-            v-model="dialogVisible"
-            :close-on-click-modal="false">    
-            <div slot="footer" class="dialog-footer">
-                <el-button @click.native="dialogVisible = false">取消</el-button>
-                <el-button type="primary" :loading="addLoading">提交</el-button>
-            </div>
-        </el-dialog>
        <MainPageTable/>
     </div>
 </template>
@@ -26,21 +17,11 @@ import MainPageTable from './MainPageTable.vue'
 export default {
   components: { MainPageTable },
   data() {
-      return {
-        // order: {
-        //     orderNumber:'20190724005',
-        //     userName:'Mary',
-        //     phoneNumber:'18075525725',
-        //     status:'未预约',
-        //     orderTime:'2019-07-25T03:07:16.740+0000',
-        //     weight:3.0
-        // }
-      }
   },
   methods:{
-    add:function(){
-        this.$store.dispatch('add', this.order)
-        },
+    // add:function(){
+    //     this.$store.dispatch('add', this.order)
+    //     },
     filterStatus:function(status){
         this.$store.dispatch('filterStatus', status);
     },
