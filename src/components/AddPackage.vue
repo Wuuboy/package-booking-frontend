@@ -1,100 +1,46 @@
 <template>
     <div id="app">
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="订单号" prop="pass">
-                <el-input v-model="ruleForm.pass" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="收件人" prop="checkPass">
-                <el-input  v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="电话" prop="age">
-                <el-input v-model.number="ruleForm.age"></el-input>
-            </el-form-item>
-            <el-form-item label="重量" prop="age">
-                <el-input v-model.number="ruleForm.age"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary">提交</el-button>
-                <el-button >重置</el-button>
-            </el-form-item>
+      <div>
+        <el-form v-loading="loading" label-position="left" label-width="80px" :model="packageOrder">
+          <el-form-item label="订单号">
+            <el-input v-model="packageOrder.orderNumber"></el-input>
+          </el-form-item>
+          <el-form-item label="收件人">
+            <el-input v-model="packageOrder.userName"></el-input>
+          </el-form-item>
+          <el-form-item label="电话">
+            <el-input v-model="packageOrder.phoneNnumber"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submit">提交</el-button>
+          </el-form-item>
         </el-form>
-</div>
+    </div>
+  </div>
 </template>
 <script>
-export default {
+ export default {
   data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
-      return {
-        ruleForm: {
-          pass: '',
-          checkPass: '',
-          age: ''
-        },
-        rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
-          ]
-        }
-      };
-    },
-    methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+    return {
+      loading: false,
+      packageOrder: {
+        orderNumber: "",
+        status: "未取件",
+        orderTime: "",
+        userName: "",
+        phoneNnumber: ""
       }
+    };
+  },
+  methods: {
+    submit: async function() {
+      this.loading = true;
+      this.$store.dispatch('add', this.packageOrder)
+      this.loading = false;
+      this.$message.success("提交成功");
     }
   }
-var Ctor = Vue.extend(Main)
-new Ctor().$mount('#app') 
+};
 </script>
 <style>
 @import url("//unpkg.com/element-ui@2.10.1/lib/theme-chalk/index.css");
