@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+// import Home from './views/Home.vue'
+// import { Main } from 'element-ui';
+import MainPage from './components/MainPage.vue'
+import AddPackage from './components/AddPackage.vue'
 
 Vue.use(Router)
 
@@ -10,8 +13,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'MainPage',
+      component: MainPage
+    },
+    {
+      path: '/AddPackage',
+      name: 'AddPackage',
+      component: AddPackage
     },
     {
       path: '/about',
