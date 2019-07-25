@@ -11,10 +11,10 @@ export default new Vuex.Store({
   },
   mutations: {
     appointOrderTime(state,item){
-      state.tableData.pop(state.tableData.filter(e=>e.id === item.id)).push(item)
+      // state.tableData.pop(state.tableData.filter(e=>e.id === item.id)).push(item)
     },
     updateStatus(state,item){
-      state.tableData.pop(state.tableData.filter(e=>e.id === item.id)).push(item)
+      // state.tableData.pop(state.tableData.filter(e=>e.id === item.id)).push(item)
     },
     addList (state,items) {
       state.tableData.push(...items);
@@ -28,8 +28,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    appointOrderTime:({commit},orderNumber) =>{
-      axios.put('http://localhost:8090/packageOrders/'+orderNumber)
+    appointOrderTime:({commit},packageOrder) =>{
+      console.log(packageOrder.orderTime)
+      console.log(packageOrder.orderNumber)
+      axios.put('http://localhost:8090/packageOrders/'+packageOrder.orderNumber,packageOrder)
           .then(function (response) {
             console.log(response.data)
             commit('appointOrderTime',response.data)

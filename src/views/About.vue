@@ -50,9 +50,10 @@ export default {
       const minutesNow = parseInt(date.getMinutes(),10)
       const secondsNow = parseInt(date.getSeconds(),10)
 
-      if(year>=yearNow&&month>=month&&day>=dayNow&&hour>=hourNow&&minutes>=minutesNow&&seconds>=secondsNow){
-          if(hour>=09&&hour<=20&&minutes>=00&&seconds>=00){
-              this.$store.dispatch('appointOrderTime',this.orderNumber)
+      if(year>=yearNow&&month>=month&&day>=dayNow){
+        // if(hour>=hourNow&&minutes>=minutesNow&&seconds>=secondsNow)
+          if(hour>=9&&hour<=20&&minutes>=0&&seconds>=0){
+              this.$store.dispatch('appointOrderTime',this.packageOrder)
               // this.loading = false;
               this.$message.success("提交成功");
           }else{
@@ -63,24 +64,7 @@ export default {
       }
 
 
-      // console.log(year)
-      // console.log(yearNow)
-
-      // console.log(month)
-      // console.log(monthNow)
-
-      // console.log(day)
-      // console.log(dayNow)
-
-      // console.log(hour)
-      // console.log(hourNow)
-
-      // console.log(minutes)
-      // console.log(minutesNow)
-
-      // console.log(seconds)
-      // console.log(secondsNow)
-
+     
       
     }
   }
